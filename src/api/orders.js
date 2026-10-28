@@ -1,9 +1,10 @@
-import { API_URL, get, post } from "./client";
+import { buildUrl, get, post } from "./client";
 
 // Pelanggan
-export const createOrder = (payload) => post("/orders", payload).then((r) => r.data);
+export const createOrder = (payload) =>
+  post("/orders", payload).then((r) => r.data);
 export const getOrder = (code) => get(`/orders/${code}`).then((r) => r.data);
-export const orderStreamUrl = (code) => `${API_URL}/orders/${code}/stream`;
+export const orderStreamUrl = (code) => buildUrl(`/orders/${code}/stream`);
 
 // Simulator pembayaran QRIS (hanya aktif jika PAYMENT_PROVIDER=simulator)
 export const simulatePayment = (code, result = "SUCCESS") =>

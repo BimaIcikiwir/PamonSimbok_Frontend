@@ -16,6 +16,9 @@ const withApiPrefix = (path) => {
   return p === "/api" || p.startsWith("/api/") ? p : `/api${p}`;
 };
 
+// URL lengkap (domain + /api + path), dipakai juga untuk EventSource/stream
+export const buildUrl = (path) => API_URL + withApiPrefix(path);
+
 const TOKEN_KEY = "simbok.token";
 
 export const tokenStore = {
@@ -44,7 +47,7 @@ export async function request(
   path,
   { method = "GET", body, query, auth = false, signal } = {},
 ) {
-  const url = new URL(API_URL + withApiPrefix(path));
+  const url = new URL(buildUrl(path));
   if (query) {
     Object.entries(query).forEach(([k, v]) => {
       if (v !== undefined && v !== null && v !== "") url.searchParams.set(k, v);
