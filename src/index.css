@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+/* ===== Token tema Pawon Simbok (diambil dari logo) ===== */
+@theme {
+  --font-display: "Baloo 2", "Nunito", system-ui, sans-serif;
+  --font-sans: "Nunito", system-ui, sans-serif;
+
+  /* soga: cokelat tua batik, warna huruf & blangkon di logo */
+  --color-soga-50: #fbf3ec;
+  --color-soga-100: #f1ddc9;
+  --color-soga-200: #dfbb97;
+  --color-soga-300: #c48f5f;
+  --color-soga-400: #a56a3a;
+  --color-soga-500: #8a4f25;
+  --color-soga-600: #6e3a17;
+  --color-soga-700: #55290f;
+  --color-soga-800: #3e1b0c;
+  --color-soga-900: #2b1208;
+
+  /* emas: kuning latar bulat di logo */
+  --color-emas-100: #fdf0c8;
+  --color-emas-200: #fbe08f;
+  --color-emas-300: #f9cf5e;
+  --color-emas-400: #f6bd3a;
+  --color-emas-500: #e9a51c;
+  --color-emas-600: #c98512;
+
+  /* daun: daun pisang di logo */
+  --color-daun-100: #e3efd2;
+  --color-daun-300: #9cc16a;
+  --color-daun-500: #5f8d33;
+  --color-daun-600: #4b7226;
+  --color-daun-700: #3a591e;
+
+  /* gading: kertas / latar terang */
+  --color-gading-50: #fffaf0;
+  --color-gading-100: #fdf1d6;
+  --color-gading-200: #f6e0b0;
+
+  --color-sambal-500: #c4402f;
+  --color-sambal-100: #fbe0da;
+
+  --shadow-timbul: 0 3px 0 0 var(--color-soga-800);
+  --shadow-kartu: 0 10px 30px -12px rgb(62 27 12 / 0.35);
+
+  --animate-uap: uap 4s ease-in-out infinite;
+  --animate-ketuk: ketuk 1.4s ease-in-out infinite;
+}
+
+@keyframes uap {
+  0% { opacity: 0; transform: translateY(6px) scaleX(0.9); }
+  40% { opacity: 0.8; }
+  100% { opacity: 0; transform: translateY(-22px) scaleX(1.15); }
+}
+@keyframes ketuk {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+/* ===== Dasar ===== */
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-soga-800);
+  background-color: var(--color-gading-50);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.1; }
+
+:focus-visible {
+  outline: 3px solid var(--color-emas-500);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* ===== Motif batik (SVG inline, tanpa file gambar) ===== */
+/* Kawung: empat elips bertemu di tengah */
+.batik-kawung {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='none' stroke='%23a56a3a' stroke-width='1.4'%3E%3Cellipse cx='12' cy='24' rx='9' ry='5.5' transform='rotate(90 12 24)'/%3E%3Cellipse cx='36' cy='24' rx='9' ry='5.5' transform='rotate(90 36 24)'/%3E%3Cellipse cx='24' cy='12' rx='9' ry='5.5'/%3E%3Cellipse cx='24' cy='36' rx='9' ry='5.5'/%3E%3C/g%3E%3Ccircle cx='24' cy='24' r='1.6' fill='%23a56a3a'/%3E%3Ccircle cx='0' cy='0' r='1.6' fill='%23a56a3a'/%3E%3Ccircle cx='48' cy='0' r='1.6' fill='%23a56a3a'/%3E%3Ccircle cx='0' cy='48' r='1.6' fill='%23a56a3a'/%3E%3Ccircle cx='48' cy='48' r='1.6' fill='%23a56a3a'/%3E%3C/svg%3E");
+  background-size: 48px 48px;
+}
+/* Kawung warna emas di atas latar gelap */
+.batik-kawung-emas {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='none' stroke='%23f6bd3a' stroke-width='1.3'%3E%3Cellipse cx='12' cy='24' rx='9' ry='5.5' transform='rotate(90 12 24)'/%3E%3Cellipse cx='36' cy='24' rx='9' ry='5.5' transform='rotate(90 36 24)'/%3E%3Cellipse cx='24' cy='12' rx='9' ry='5.5'/%3E%3Cellipse cx='24' cy='36' rx='9' ry='5.5'/%3E%3C/g%3E%3Ccircle cx='24' cy='24' r='1.6' fill='%23f6bd3a'/%3E%3C/svg%3E");
+  background-size: 48px 48px;
+}
+/* Parang: garis diagonal bergelombang, dipakai sebagai pita pemisah */
+.batik-parang {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='16' viewBox='0 0 32 16'%3E%3Cpath d='M0 16 Q8 0 16 8 T32 0' fill='none' stroke='%23f6bd3a' stroke-width='2.2' stroke-linecap='round'/%3E%3Cpath d='M0 8 Q8 -8 16 0 T32 -8' fill='none' stroke='%23f6bd3a' stroke-width='1.2' stroke-linecap='round' opacity='.55'/%3E%3C/svg%3E");
+  background-size: 32px 16px;
+}
+
+/* Lengkung kori: atas melengkung penuh */
+.bentuk-kori { border-radius: 9999px 9999px 1.25rem 1.25rem; }
+/* Tetes daun: dua sudut berseberangan membulat penuh */
+.bentuk-daun { border-radius: 0 70% 0 70%; }
+/* Batu kali: bentuk organik */
+.bentuk-batu { border-radius: 62% 38% 54% 46% / 48% 56% 44% 52%; }
+
+/* Tepi bergerigi tipis seperti ukiran, dipakai di bagian bawah header gelap */
+.tepi-ukir {
+  --s: 14px;
+  height: var(--s);
+  background:
+    radial-gradient(circle at 50% 0, var(--color-soga-800) 0 calc(var(--s) * 0.5), transparent calc(var(--s) * 0.5 + 0.5px))
+    0 0 / var(--s) var(--s) repeat-x;
+}
+
+.scroll-halus { scrollbar-width: thin; scrollbar-color: var(--color-soga-300) transparent; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
