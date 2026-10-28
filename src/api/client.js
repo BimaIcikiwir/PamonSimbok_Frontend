@@ -1,8 +1,20 @@
 // Klien HTTP tunggal untuk semua request ke BE Pawon Simbok.
 // Format sukses BE : { success: true, message, data, meta? }
 // Format gagal BE  : { success: false, code, message, errors? }
+//
+// VITE_API_URL cukup berisi domain BE saja (tanpa slash di akhir, tanpa /api).
+// Contoh: VITE_API_URL=https://be-kamu.onrender.com
+// Prefix /api ditambahkan otomatis oleh klien ini.
 
-export const API_URL = (import.meta.env.VITE_API_URL);
+export const API_URL = (import.meta.env.VITE_API_URL || "")
+  .replace(/\/+$/, "")
+  .replace(/\/api$/, ""); // jaga-jaga kalau env terlanjur diisi ...onrender.com/api
+
+// Semua endpoint BE berawalan /api. Kalau path sudah berawalan /api, tidak ditambah lagi.
+const withApiPrefix = (path) => {
+  const p = path.startsWith("/") ? path : `/${path}`;
+  return p === "/api" || p.startsWith("/api/") ? p : `/api${p}`;
+};
 
 const TOKEN_KEY = "simbok.token";
 
@@ -28,8 +40,11 @@ export const setUnauthorizedHandler = (fn) => {
   onUnauthorized = fn;
 };
 
-export async function request(path, { method = "GET", body, query, auth = false, signal } = {}) {
-  const url = new URL(API_URL + path);
+export async function request(
+  path,
+  { method = "GET", body, query, auth = false, signal } = {},
+) {
+  const url = new URL(API_URL + withApiPrefix(path));
   if (query) {
     Object.entries(query).forEach(([k, v]) => {
       if (v !== undefined && v !== null && v !== "") url.searchParams.set(k, v);
@@ -51,7 +66,11 @@ export async function request(path, { method = "GET", body, query, auth = false,
     });
   } catch (err) {
     if (err.name === "AbortError") throw err;
-    throw new ApiError(0, "NETWORK_ERROR", "Tidak bisa terhubung ke server. Periksa koneksi atau alamat API.");
+    throw new ApiError(
+      0,
+      "NETWORK_ERROR",
+      "Tidak bisa terhubung ke server. Periksa koneksi atau alamat API.",
+    );
   }
 
   let json = null;
@@ -74,5 +93,7 @@ export async function request(path, { method = "GET", body, query, auth = false,
 }
 
 export const get = (path, opts) => request(path, { ...opts, method: "GET" });
-export const post = (path, body, opts) => request(path, { ...opts, method: "POST", body });
-export const patch = (path, body, opts) => request(path, { ...opts, method: "PATCH", body });
+export const post = (path, body, opts) =>
+  request(path, { ...opts, method: "POST", body });
+export const patch = (path, body, opts) =>
+  request(path, { ...opts, method: "PATCH", body });
