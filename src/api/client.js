@@ -2,7 +2,7 @@
 // Format sukses BE : { success: true, message, data, meta? }
 // Format gagal BE  : { success: false, code, message, errors? }
 
-export const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:3000/api").replace(/\/$/, "");
+export const API_URL = (import.meta.env.VITE_API_URL);
 
 const TOKEN_KEY = "simbok.token";
 
