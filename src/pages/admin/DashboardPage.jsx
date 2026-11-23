@@ -10,16 +10,25 @@ import Uap from "../../components/ornaments/Uap";
 import StatusBadge from "../../components/order/StatusBadge";
 import EmptyState from "../../components/ui/EmptyState";
 import bgSambutan from "../../assets/bg-sambutan.png";
+import bgMenunggu from "../../assets/bg-menunggu.png";
+import bgDimasak from "../../assets/bg-masak.png";
+import bgSiap from "../../assets/bg-siap.png";
+import bgSelesai from "../../assets/bg-selesai.png";
 
-function Angka({ label, nilai, warna, bentuk }) {
+function Angka({ label, nilai, gambar }) {
   return (
     <div className="flex items-center gap-4 rounded-[2rem] border-2 border-soga-200 bg-white p-4 shadow-kartu">
       <div
-        className={`grid h-16 w-16 shrink-0 place-items-center font-display text-2xl font-extrabold text-white ${bentuk}`}
-        style={{ background: warna }}
+        className="relative grid h-20 w-20 shrink-0 place-items-center bg-contain bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url(${gambar})`,
+        }}
       >
-        {nilai}
+        <span className="relative z-10 font-display text-2xl font-extrabold text-white drop-shadow-md">
+          {nilai}
+        </span>
       </div>
+
       <p className="font-display text-lg font-bold leading-tight">{label}</p>
     </div>
   );
@@ -90,15 +99,22 @@ export default function DashboardPage() {
     <div className="space-y-8">
       {/* Sambutan */}
       <section
-        className="relative overflow-hidden rounded-[3rem] bg-soga-800 px-7 py-8 text-gading-50 sm:px-10"
+        className="
+    relative flex w-full items-center
+    min-h-[330px] lg:min-h-0
+    lg:aspect-[2135/516]
+    overflow-hidden
+    px-7 py-8 sm:px-10
+    text-gading-50
+  "
         style={{
           backgroundImage: `url(${bgSambutan})`,
-          backgroundSize: "100% 100%",
+          backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="relative max-w-xl">
+        <div className="relative z-10 max-w-xl">
           <p className="font-display text-lg text-emas-300">
             Sugeng enjang, {user?.name}
           </p>
@@ -133,7 +149,6 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      {/* Angka */}
       <section
         className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
         aria-label="Ringkasan hari ini"
@@ -141,27 +156,14 @@ export default function DashboardPage() {
         <Angka
           label="Menunggu bayar tunai"
           nilai={s.tunai}
-          warna="#c98512"
-          bentuk="bentuk-batu"
+          gambar={bgMenunggu}
         />
-        <Angka
-          label="Sedang dimasak"
-          nilai={s.dimasak}
-          warna="#8a4f25"
-          bentuk="rounded-full"
-        />
-        <Angka
-          label="Siap diambil"
-          nilai={s.siap}
-          warna="#4b7226"
-          bentuk="bentuk-daun"
-        />
-        <Angka
-          label="Selesai"
-          nilai={s.selesai}
-          warna="#6e3a17"
-          bentuk="bentuk-kori"
-        />
+
+        <Angka label="Sedang dimasak" nilai={s.dimasak} gambar={bgDimasak} />
+
+        <Angka label="Siap diambil" nilai={s.siap} gambar={bgSiap} />
+
+        <Angka label="Selesai" nilai={s.selesai} gambar={bgSelesai} />
       </section>
 
       <div className="grid gap-6 lg:grid-cols-2">
